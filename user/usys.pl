@@ -15,7 +15,7 @@ sub entry {
         print "$prefix$name:\n";
     }
     else {
-	      print ".global $name\n";
+        print ".global $name\n";
         print "$name:\n";
     }
 
