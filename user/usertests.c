@@ -27,7 +27,7 @@ char buf[BUFSZ];
 // fair amount of time.
 //
 
-typedef void ( *test_t )( char* s );
+typedef void (*test_t)(char* s);
 
 // what if you pass ridiculous pointers to system calls
 // that read user memory with copyin?
@@ -74,58 +74,53 @@ copyin(char *s)
   }
 }
 
-void test_readcount( char* s )
+void test_readcount(char* s)
 {
-  // Get the initial count.
-  int old_count = readcount();
-  int new_count = 0;
-  printf( "test_readcount: initial readcount=%d\n", old_count );
+    // Get the initial count.
+    int old_count = readcount();
+    int new_count = 0;
+    printf("test_readcount: initial readcount=%d\n", old_count);
 
-  int readme_fd = open( "README", O_RDONLY );
-  if ( readme_fd < 0 )
-  {
-    printf( "open( README ) failed\n" );
-    exit( 1 );
-  }
+    int readme_fd = open("README", O_RDONLY);
+    if (readme_fd < 0) {
+        printf("open(README) failed\n");
+        exit(1);
+    }
 
-  char readbuf[ 77 ] = { 0 };
-  int n = 0;
+    char readbuf[77] = {0};
+    int n = 0;
 
-  // Read 1.
-  n = read( readme_fd, ( void* )readbuf, 77 );
-  if ( n != 77 )
-  {
-    printf( "read( readme_fd, ... ) failed to read all 77 bytes" );
-    exit( 1 );
-  }
+    // Read 1.
+    n = read(readme_fd, (void*)readbuf, 77);
+    if (n != 77) {
+        printf("read(readme_fd, ...) failed to read all 77 bytes");
+        exit(1);
+    }
 
-  // Assert 1.
-  new_count = readcount();
-  if ( new_count != old_count + 1 )
-  {
-    printf( "readcount=%d, expected=%d\n", new_count, old_count + 1 );
-    exit( 1 );
-  }
-  old_count = new_count;
+    // Assert 1.
+    new_count = readcount();
+    if (new_count != old_count + 1) {
+        printf("readcount=%d, expected=%d\n", new_count, old_count + 1);
+        exit(1);
+    }
+    old_count = new_count;
 
-  // Read 2.
-  n = read( readme_fd, ( void* )readbuf, 12 );
-  if ( n != 12 )
-  {
-    printf( "read( readme_fd, ... ) did not manage to read all 12 bytes" );
-    exit( 1 );
-  }
+    // Read 2.
+    n = read(readme_fd, (void*)readbuf, 12);
+    if (n != 12) {
+        printf("read(readme_fd, ...) did not manage to read all 12 bytes");
+        exit(1);
+    }
 
-  // Assert 2.
-  new_count = readcount();
-  if ( new_count != old_count + 1 )
-  {
-    printf( "readcount=%d, expected=%d\n", new_count, old_count + 1 );
-    exit( 1 );
-  }
-  old_count = new_count;
+    // Assert 2.
+    new_count = readcount();
+    if (new_count != old_count + 1) {
+        printf("readcount=%d, expected=%d\n", new_count, old_count + 1);
+        exit(1);
+    }
+    old_count = new_count;
 
-  close( readme_fd );
+    close(readme_fd);
 }
 
 // what if you pass ridiculous pointers to system calls

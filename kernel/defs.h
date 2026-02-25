@@ -182,9 +182,9 @@ void            virtio_disk_rw(struct buf *, int);
 void            virtio_disk_intr(void);
 
 // readcount.c
-void            readcount_init( void );
-void            readcount_inc( void );
-uint64          readcount_get( void );
+void            readcount_init(void);
+void            readcount_inc(void);
+uint64          readcount_get(void);
 
 // number of elements in fixed-size array
 #define NELEM(x) (sizeof(x)/sizeof((x)[0]))

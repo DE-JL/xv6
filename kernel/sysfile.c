@@ -506,4 +506,7 @@ sys_pipe(void)
   return 0;
 }
 
-uint64 sys_readcount( void ) { return readcount_get(); }
+uint64 sys_readcount(void)
+{
+    return readcount_get();
+}

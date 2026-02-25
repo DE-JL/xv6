@@ -11,25 +11,25 @@
 #include "fcntl.h"
 
 static struct spinlock readcount_lock;
-static uint64          readcount;
+static uint64 readcount;
 
-void readcount_init( void )
+void readcount_init(void)
 {
-  initlock( &readcount_lock, "readcount" );
-  readcount = 0;
+    initlock(&readcount_lock, "readcount");
+    readcount = 0;
 }
 
-void readcount_inc( void )
+void readcount_inc(void)
 {
-  acquire( &readcount_lock );
-  ++readcount;
-  release( &readcount_lock );
+    acquire(&readcount_lock);
+    ++readcount;
+    release(&readcount_lock);
 }
 
-uint64 readcount_get( void )
+uint64 readcount_get(void)
 {
-  acquire ( &readcount_lock );
-  uint64 count = readcount;
-  release( &readcount_lock );
-  return count;
+    acquire(&readcount_lock);
+    uint64 count = readcount;
+    release(&readcount_lock);
+    return count;
 }
